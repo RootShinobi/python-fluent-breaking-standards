@@ -1,14 +1,53 @@
+from abc import abstractmethod
+from contextlib import suppress
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Any, Union
+from typing import Any, Union, Type, Dict
+from babel.core import Locale
 
 from fluent.syntax.ast import MessageReference, TermReference
 
-from .types import FluentInt, FluentFloat, FluentDecimal, FluentDate, FluentDateTime
+from .types import FluentInt, FluentFloat, FluentDecimal, FluentDate, FluentDateTime, FluentType
 from .errors import FluentReferenceError
 
 TERM_SIGIL = '-'
 ATTRIBUTE_SEPARATOR = '.'
+
+class NewFluentType(FluentType):
+    @abstractmethod
+    def __init__(self, value: Any):
+        pass
+
+    @abstractmethod
+    def __eq__(self, other: Any):
+        pass
+
+    @abstractmethod
+    def format(self, locale: Locale) -> str:
+        pass
+
+
+class VariantsType(NewFluentType):
+
+    def __init__(self, value: Any):
+        self.values = str(value), str(value).lower(), str(value).upper()
+
+    def __eq__(self, other: str):
+        if isinstance(other, str):
+            return other in self.values
+        if isinstance(other, VariantsType):
+            return self.values == other.values
+        return False
+
+    def format(self, locale: Locale) -> str:
+        return self.values[0]
+
+
+types_map: Dict[Any, Type[NewFluentType]] = {
+    None: VariantsType,
+    True: VariantsType,
+    False: VariantsType,
+}
 
 
 def native_to_fluent(val: Any) -> Any:
@@ -26,6 +65,14 @@ def native_to_fluent(val: Any) -> Any:
         return FluentDateTime.from_date_time(val)
     if isinstance(val, date):
         return FluentDate.from_date(val)
+    if isinstance(val, bool):
+        return VariantsType(val)
+    if val is None:
+        return VariantsType(val)
+    # with suppress(KeyError, TypeError):
+    #     return types_map[val](val)
+    # with suppress(KeyError, TypeError):
+    #     return types_map[type(val)](val)
     return val
 
 

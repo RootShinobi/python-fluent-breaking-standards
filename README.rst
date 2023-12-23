@@ -4,6 +4,18 @@ Project Fluent
 This is a collection of Python packages to use the `Fluent localization
 system <http://projectfluent.org/>`__.
 
+
+changes:
+
+``calling message work with named arguments``
+
+``number use grouping default false``
+
+``new types None True and False``
+
+``custom functions can get ResolverEnvironment if they specify it as a typehint``
+
+
 python-fluent consists of these packages:
 
 ``fluent.syntax``

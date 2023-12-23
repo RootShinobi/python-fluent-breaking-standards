@@ -1,9 +1,31 @@
+from inspect import signature
 from typing import Any, Dict, List
 from fluent.syntax import ast as FTL
 from . import resolver
 
 
 class Compiler:
+    def __init__(self, core):
+        self.core = core
+
+    def compile_FunctionReference(self, _: Any, span: Any, id: FTL.Identifier,
+                                  arguments: FTL.CallArguments) -> Any:
+        func = self.core._functions.get(id.name) # noqa
+        if func:
+            for key, ano in signature(func).parameters.items():
+                if ano.annotation is resolver.ResolverEnvironment:
+                    arguments.named.append(
+                        FTL.NamedArgument(
+                            name=FTL.Identifier(
+                                name=key,
+                            ),
+                            value=lambda env: env,  # noqa
+                            span=0
+                        )
+                    )
+
+        return FTL.FunctionReference(span=span, id=id, arguments=arguments)
+
     def __call__(self, item: Any) -> Any:
         if isinstance(item, FTL.BaseNode):
             return self.compile(item)

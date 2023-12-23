@@ -629,7 +629,7 @@ class FluentParser:
             ps.next()
             ps.skip_blank()
 
-            value = self.get_literal(ps)
+            value = self.get_inline_expression(ps)
             return ast.NamedArgument(exp.id, value)
 
         raise ParseError('E0009')

@@ -43,7 +43,7 @@ class FluentBundle:
         self._terms: Dict[str, Union[FTL.Message, FTL.Term]] = {}
         self._compiled: Dict[str, Message] = {}
         # The compiler is not typed, and this cast is only valid for the public API
-        self._compiler = cast(Callable[[Union[FTL.Message, FTL.Term]], Message], Compiler())
+        self._compiler = cast(Callable[[Union[FTL.Message, FTL.Term]], Message], Compiler(self))
         self._babel_locale = self._get_babel_locale()
         self._plural_form = cast(Callable[[Any], Callable[[Union[int, float]], PluralCategory]],
                                  babel.plural.to_python)(self._babel_locale.plural_form)

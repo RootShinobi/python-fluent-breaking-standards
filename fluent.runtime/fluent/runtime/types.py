@@ -75,7 +75,7 @@ class NumberFormatOptions:
     currencyDisplay: Literal['symbol', 'code', 'name'] = attr.ib(
         default=CURRENCY_DISPLAY_SYMBOL,
         validator=attr.validators.in_(CURRENCY_DISPLAY_OPTIONS))
-    useGrouping: bool = attr.ib(default=True)
+    useGrouping: bool = attr.ib(default=False)
     minimumIntegerDigits: Union[int, None] = attr.ib(default=None)
     minimumFractionDigits: Union[int, None] = attr.ib(default=None)
     maximumFractionDigits: Union[int, None] = attr.ib(default=None)
