@@ -1,17 +1,17 @@
 from abc import abstractmethod
-from contextlib import suppress
 from datetime import date, datetime
 from decimal import Decimal
 from typing import Any, Union, Type, Dict
-from babel.core import Locale
 
+from babel.core import Locale
 from fluent.syntax.ast import MessageReference, TermReference
 
-from .types import FluentInt, FluentFloat, FluentDecimal, FluentDate, FluentDateTime, FluentType
 from .errors import FluentReferenceError
+from .types import FluentInt, FluentFloat, FluentDecimal, FluentDate, FluentDateTime, FluentType
 
 TERM_SIGIL = '-'
 ATTRIBUTE_SEPARATOR = '.'
+
 
 class NewFluentType(FluentType):
     @abstractmethod
@@ -30,17 +30,17 @@ class NewFluentType(FluentType):
 class VariantsType(NewFluentType):
 
     def __init__(self, value: Any):
-        self.values = str(value), str(value).lower(), str(value).upper()
+        self.value = str(value).casefold()
 
     def __eq__(self, other: str):
         if isinstance(other, str):
-            return other in self.values
+            return other == self.value
         if isinstance(other, VariantsType):
-            return self.values == other.values
+            return self.value == other.value
         return False
 
     def format(self, locale: Locale) -> str:
-        return self.values[0]
+        return self.value
 
 
 types_map: Dict[Any, Type[NewFluentType]] = {
