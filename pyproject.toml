@@ -1,5 +1,20 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
 name = "fluent"
 version = "0.1.0"
 description = ""
-authors = ["RootShinobi"]
+authors = [
+    { name = "RootShinobi" },
+]
+readme = "README.rst"
+requires-python = ">=3.7"
+
+[tool.hatch.build.targets.wheel]
+packages = ["fluent.runtime/fluent", "fluent.syntax/fluent"]
+
+
+[tool.hatch.build.targets.sdist]
+only-include = ["fluent.runtime/fluent", "fluent.syntax/fluent"]
