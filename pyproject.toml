@@ -1,0 +1,11 @@
+[tool.poetry]
+name = "python-fluent-breaking-standards"
+version = "0.1.0"
+description = ""
+authors = ["RootShinobi"]
+readme = "README.rst"
+packages = [{ include = "fluent.runtime" }, { include = "fluent.syntax" }]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
