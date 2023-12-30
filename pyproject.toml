@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "python-fluent-breaking-standards"
+name = "fluent"
 version = "0.1.0"
 description = ""
 authors = ["RootShinobi"]
