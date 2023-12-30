@@ -54,6 +54,8 @@ def native_to_fluent(val: Any) -> Any:
     """
     Convert a python type to a Fluent Type.
     """
+    if isinstance(val, bool):
+        return VariantsType(val)
     if isinstance(val, int):
         return FluentInt(val)
     if isinstance(val, float):
@@ -65,8 +67,6 @@ def native_to_fluent(val: Any) -> Any:
         return FluentDateTime.from_date_time(val)
     if isinstance(val, date):
         return FluentDate.from_date(val)
-    if isinstance(val, bool):
-        return VariantsType(val)
     if val is None:
         return VariantsType(val)
     # with suppress(KeyError, TypeError):
