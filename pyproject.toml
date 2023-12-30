@@ -12,3 +12,7 @@ include = [
 [tool.poetry.dependencies]
 fluent-syntax = { path = "./fluent.syntax" }
 fluent-runtime = { path = "./fluent.runtime" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
