@@ -4,11 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["RootShinobi"]
 readme = "README.rst"
-packages = [{ include = "fluent.runtime" }, { include = "fluent.syntax" }]
 
 [tool.poetry.dependencies]
-fluent-syntax = { path = "./fluent.syntax" }
-fluent-runtime = { path = "./fluent.runtime" }
+fluent-syntax = { path = "./fluent/syntax" }
+fluent-runtime = { path = "./fluent/runtime" }
 
 [build-system]
 requires = ["poetry-core"]
