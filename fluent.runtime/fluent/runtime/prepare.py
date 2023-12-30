@@ -15,8 +15,8 @@ class Compiler:
             for key, ano in signature(func).parameters.items():
                 if ano.annotation is resolver.ResolverEnvironment:
                     arguments.named.append(
-                        FTL.NamedArgument(
-                            name=FTL.Identifier(
+                        resolver.NamedArgument(
+                            name=resolver.Identifier(
                                 name=key,
                             ),
                             value=lambda env: env,  # noqa
@@ -24,7 +24,7 @@ class Compiler:
                         )
                     )
 
-        return FTL.FunctionReference(span=span, id=id, arguments=arguments)
+        return resolver.FunctionReference(span=span, id=id, arguments=arguments)
 
     def __call__(self, item: Any) -> Any:
         if isinstance(item, FTL.BaseNode):

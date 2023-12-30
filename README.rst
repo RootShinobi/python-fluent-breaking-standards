@@ -8,13 +8,17 @@ system <http://projectfluent.org/>`__.
 changes:
 
 ``calling message work with named arguments``
+---------------------------------------------
+
+
+
 
 ``number use grouping default false``
-
+____________________________________
 ``new types None True and False``
-
+__________________________________
 ``custom functions can get ResolverEnvironment if they specify it as a typehint``
-
+_________________________________________________________________________________
 
 python-fluent consists of these packages:
 
