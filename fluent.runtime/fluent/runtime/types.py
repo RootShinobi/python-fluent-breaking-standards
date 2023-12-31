@@ -307,6 +307,12 @@ class FluentDateType(FluentType):
             if k not in _SUPPORTED_DATETIME_OPTIONS:
                 warnings.warn(f"FluentDateType option {k} is not yet supported")
 
+    def __str__(self):
+        return self.format(None) # noqa
+
+    def __repr__(self):
+        return f"<FluentDateType: {self}>"
+
     def format(self, locale: Locale) -> str:
         if isinstance(self, datetime):
             selftz = _ensure_datetime_tzinfo(self, tzinfo=self.options.timeZone)
