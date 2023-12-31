@@ -5,7 +5,7 @@ from decimal import Decimal
 import attr
 import pytz
 from babel import Locale
-from babel.dates import format_date, format_time, get_datetime_format, get_timezone
+from babel.dates import format_date, format_time, get_datetime_format, get_timezone, LC_TIME
 from babel.numbers import NumberPattern, parse_pattern
 from typing import Any, Dict, Type, TypeVar, Union, cast
 from typing_extensions import Literal
@@ -308,7 +308,7 @@ class FluentDateType(FluentType):
                 warnings.warn(f"FluentDateType option {k} is not yet supported")
 
     def __str__(self):
-        return self.format(None) # noqa
+        return self.format(LC_TIME)
 
     def __repr__(self):
         return f"<FluentDateType: {self}>"
